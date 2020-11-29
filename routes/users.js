@@ -1,4 +1,5 @@
-var express = require('express');
+import express from 'express'
+
 var router = express.Router();
 
 /* GET users listing. */
@@ -11,4 +12,4 @@ router.get('/cool', (req, res) => {
   res.send('You\'re so cool!')
 })
 
-module.exports = router;
+export default router;
