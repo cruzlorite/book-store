@@ -10,9 +10,12 @@ import usersRouter from './routes/users'
 
 var app = express();
 
+// get env variables
+const database_url = process.env.DATABASE_URL
+
 // create the database connection
 var mongoose = require('mongoose');
-var mongoDB = "mongodb+srv://root:root@cluster0.wz7ak.mongodb.net/book-store?retryWrites=true&w=majority";
+var mongoDB = database_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
