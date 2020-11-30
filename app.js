@@ -6,7 +6,7 @@ import logger from 'morgan'
 
 import indexRouter from './routes/index'
 import usersRouter from './routes/users'
-
+import catalogRouter from './routes/catalog'
 
 var app = express();
 
@@ -34,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // set routers
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/catalog', catalogRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
