@@ -2,10 +2,10 @@
 import express from 'express'
 
 // Require controller modules.
-import book_controller from '../controllers/book'
-import author_controller from '../controllers/author'
-import genre_controller from '../controllers/genre'
-import book_instance_controller from '../controllers/bookinstance'
+import * as book_controller from '../controllers/book'
+import * as author_controller from '../controllers/author'
+import * as genre_controller from '../controllers/genre'
+import * as book_instance_controller from '../controllers/bookinstance'
 
 var router = express.Router();
 
