@@ -3,3 +3,6 @@ node_modules
 
 # Ignore env variables, there is a templeare at .env.example
 .env
+
+# Ignore populate-db script
+populate-db.js
