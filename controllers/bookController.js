@@ -1,4 +1,5 @@
 import async from 'async'
+import mongoose from 'mongoose'
 
 import Book from '../models/book'
 import Author from '../models/author'
@@ -43,8 +44,31 @@ export function book_list(req, res, next) {
 };
 
 // Display detail page for a specific book.
-export function book_detail(req, res) {
-    res.send('NOT IMPLEMENTED: Book detail: ' + req.params.id);
+export function book_detail(req, res, next) {
+    var id = mongoose.Types.ObjectId(req.params.id); 
+    
+    async.parallel({
+        book: function(callback) {
+            Book.findById(id)
+              .populate('author')
+              .populate('genre')
+              .exec(callback);
+        },
+        book_instance: function(callback) {
+          BookInstance.find({ 'book': id })
+          .exec(callback);
+        },
+    },
+    function(err, results) {
+        if (err) { return next(err); }
+        if (results.book==null) { // No results.
+            var err = new Error('Book not found');
+            err.status = 404;
+            return next(err);
+        }
+        // Successful, so render.
+        res.render('book_detail', { title: results.book.title, book: results.book, book_instances: results.book_instance } );
+    });
 };
 
 // Display book create form on GET.
