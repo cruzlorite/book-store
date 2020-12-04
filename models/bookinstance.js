@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { DateTime } from 'luxon'
 
 var Schema = mongoose.Schema;
 
@@ -16,6 +17,13 @@ BookInstanceSchema
 .virtual('url')
 .get(function () {
   return '/catalog/bookinstance/' + this._id;
+});
+
+// Virtual to get due_back formmated using luxon library
+BookInstanceSchema
+.virtual('due_back_formatted')
+.get(function () {
+  return DateTime.fromJSDate(this.due_back).toLocaleString(DateTime.DATE_MED);
 });
 
 //Export model
