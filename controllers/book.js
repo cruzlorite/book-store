@@ -1,8 +1,23 @@
-import Book from '../models/book'
+import async from 'async'
 
+import Book from '../models/book'
+import Author from '../models/author'
+import BookInstance from '../models/bookinstance'
+import Genre from '../models/genre'
+
+// export function index(req, res) {
+//     res.send('NOT IMPLEMENTED: Site Home Page');
+// };
 export function index(req, res) {
-    res.send('NOT IMPLEMENTED: Site Home Page');
-};
+    async.parallel({
+        book_count: (callback) => {
+            Book.countDocuments({}, callback); // empty object as match condition (find all)
+        }
+    }, (err, results) => {
+        console.log(results);
+    });
+}
+
 
 // Display list of all books.
 export function book_list(req, res) {

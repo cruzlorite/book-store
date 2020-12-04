@@ -19,7 +19,6 @@ var mongoDB = database_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-console.log(db)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
