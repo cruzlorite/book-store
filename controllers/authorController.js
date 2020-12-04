@@ -1,3 +1,7 @@
+import async from 'async'
+import mongoose from 'mongoose'
+
+import Book from '../models/book'
 import Author from '../models/author'
 
 // Display list of all Authors.
@@ -12,8 +16,29 @@ export function author_list(req, res, next) {
 };
 
 // Display detail page for a specific Author.
-export function author_detail(req, res) {
-    res.send('NOT IMPLEMENTED: Author detail: ' + req.params.id);
+export function author_detail(req, res, next) {
+    var id = mongoose.Types.ObjectId(req.params.id); 
+
+    async.parallel({
+        author: function(callback) {
+            Author.findById(id)
+            .exec(callback)
+        },
+        authors_books: function(callback) {
+            Book.find({ 'author': id },'title summary')
+            .exec(callback)
+        },
+    },
+    function(err, results) {
+        if (err) { return next(err); } // Error in API usage.
+        if (results.author==null) { // No results.
+            var err = new Error('Author not found');
+            err.status = 404;
+            return next(err);
+        }
+        // Successful, so render.
+        res.render('author_detail', { title: 'Author Detail', author: results.author, author_books: results.authors_books } );
+    });
 };
 
 // Display Author create form on GET.

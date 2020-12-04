@@ -16,14 +16,14 @@ var AuthorSchema = new Schema(
 AuthorSchema
 .virtual('date_of_birth_formatted')
 .get(function() {
-  return this.date_of_birth ? DateTime.fromJSDate(this.date_of_birth).toLocaleString(DateTime.DATE_MED) : '';
+  return this.date_of_birth ? DateTime.fromJSDate(this.date_of_birth).toLocaleString(DateTime.DATE_MED) : 'undefined';
 }) 
 
 // Virtual fir formatted author date_of_death
 AuthorSchema
 .virtual('date_of_death_formatted')
 .get(function() {
-  return this.date_of_death ? DateTime.fromJSDate(this.date_of_death).toLocaleString(DateTime.DATE_MED) : '';
+  return this.date_of_death ? DateTime.fromJSDate(this.date_of_death).toLocaleString(DateTime.DATE_MED) : 'present';
 }) 
 
 // Virtual for author's full name
